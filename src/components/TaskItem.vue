@@ -1,10 +1,12 @@
 <template>
-<div class="shadow-3xl flex flex-col h-fit bg-white basis-1/4  p-8 rounded-md">
+<the-card size="basis-1/4">
     <div class="w-full flex justify-between">
         <h3 class="font-semibold w-3/4">{{ title }}</h3>
         <the-switch :value="true"></the-switch>
     </div>
-    <p class="text-xs font-semibold text-violet-600">5 days </p>
+    <div class="w-full mt-1">
+        <p class="text-xs font-semibold text-violet-600">5 days </p>
+    </div>
     <div class="mt-5 w-full">
         <p class="text-sm text-zinc-500">{{content}}</p>
     </div>
@@ -14,14 +16,15 @@
         <button-with-icon icon="edit" class="hover:text-violet-600"></button-with-icon>
         <button-with-icon icon="trash-alt" class="hover:text-rose-600"></button-with-icon>
     </div>
-</div>
+</the-card>
 </template>
 
 <script>
 import ButtonWithIcon from "./buttons/ButtonWithIcon.vue";
 import TheSwitch from "./buttons/TheSwitch.vue";
+import TheCard from "./TheCard.vue";
 export default {
-    components: { ButtonWithIcon, TheSwitch },
+    components: { ButtonWithIcon, TheSwitch, TheCard },
     props: {
         title: {
             type: String,

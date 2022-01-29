@@ -28,3 +28,12 @@
     }
     
 }
+
+input{
+    &:focus{
+        + label{
+            color: #7c3aed !important;
+        }
+    }
+}
+

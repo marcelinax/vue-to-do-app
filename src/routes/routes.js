@@ -1,5 +1,4 @@
-import Homepage from '../views/Homepage.view.vue'
-
 export default [
-    { path: '/', component: Homepage }
+    { path: '/', component:()=> import ('../views/Homepage.view.vue') },
+    { path: '/create-task', component: () => import ('../views/CreateTask.view.vue') },
 ]

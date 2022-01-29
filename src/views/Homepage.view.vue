@@ -1,7 +1,7 @@
 <template>
 <div>
 <the-header></the-header>
-<primary-button title="ADD TASK"></primary-button>
+<primary-button title="ADD TASK" @click="goToForm"></primary-button>
 <div class="mt-32 container mx-auto grid grid-cols-3 gap-8">
 <task-item title="Buy something for my dog" content=" But first I have to buy dog... :( A little puppy"></task-item>
 <task-item title="Buy something for my dog" content=" But first I have to buy dog... :( A little puppy"></task-item>
@@ -22,6 +22,7 @@
 import TheHeader from "../components/TheHeader.vue";
 import TaskItem from "../components/TaskItem.vue";
 import PrimaryButton from "../components/buttons/PrimaryButton.vue";
+import {  useRouter } from 'vue-router';
 export default {
     components: {
         TheHeader,
@@ -30,6 +31,13 @@ export default {
 },
     setup() {
 
+        const router = useRouter()
+
+        const goToForm = () =>{
+            router.push('/create-task')
+        }
+
+        return {goToForm}
     }
 }
 </script>
