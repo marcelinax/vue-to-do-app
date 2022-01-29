@@ -2,17 +2,20 @@
 import TheHeader from "./components/TheHeader.vue";
 import TheInput from "./components/inputs/TheInput.vue";
 import TaskItem from "./components/TaskItem.vue";
+import PrimaryButton from "./components/buttons/PrimaryButton.vue";
   export default {
     components: {
     TheHeader,
     TheInput,
-    TaskItem
+    TaskItem,
+    PrimaryButton
 }
   }
 </script>
 
 <template>
 <the-header></the-header>
+<primary-button title="ADD TASK"></primary-button>
 <div class="mt-32 container mx-auto grid grid-cols-3 gap-8">
 <task-item title="Buy something for my dog" content=" But first I have to buy dog... :( A little puppy"></task-item>
 <task-item title="Buy something for my dog" content=" But first I have to buy dog... :( A little puppy"></task-item>
@@ -29,13 +32,3 @@ import TaskItem from "./components/TaskItem.vue";
 </div>
 </template>
 
-<!-- <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style> -->
