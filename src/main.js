@@ -2,7 +2,12 @@ import './styles/index.scss'
 
 import App from './App.vue'
 import { createApp } from 'vue'
+import routes from './routes';
 
 const app = createApp(App)
 
-app.mount('#app')
+app.use(routes)
+
+routes.isReady().then(() => {
+    app.mount('#app');
+  });
