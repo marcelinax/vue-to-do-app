@@ -25,8 +25,9 @@ export default {
     },
     async deleteTask(context, payload) {
         const res = await deleteTaskService(payload);
+        console.log(res)
         await context.commit('deleteTask', {
-            taskId: res.data._id
+            taskId: payload
         })
     }
 }

@@ -3,7 +3,9 @@ import config from "../../config";
 
 const deleteTaskService = async (taskId) => {
     try {
-       return await axios.delete(config.apiUrl + '/' + taskId)
+        return await axios.delete(config.apiUrl + '/' + taskId, {
+           taskId
+       })
     } catch (error) {
         throw Error(error)
     }

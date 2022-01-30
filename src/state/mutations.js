@@ -9,7 +9,9 @@ export default {
         state.tasks[payload, [...state.tasks]]
     },
     deleteTask(state, { taskId }) {
+        console.log(taskId)
         const taskIndex = state.tasks.findIndex(task => task._id === taskId);
+        console.log(taskIndex)
         state.tasks.splice(taskIndex,1)
         state.tasks = [...state.tasks]
     }
