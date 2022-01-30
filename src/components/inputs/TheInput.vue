@@ -25,7 +25,7 @@ export default {
             required: true
         }
     },
-    emits: ['input'],
+    emits: ['update:modelValue'],
     setup (_, {emit}) {
         const handleInput = (e) => {
             emit('update:modelValue', e.target.value)

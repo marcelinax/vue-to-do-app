@@ -1,3 +1,4 @@
+import createTaskSerivce from './../services/createTask.service';
 import getTasksService from './../services/getTasks.service';
 import toggleTaskStatusService from './../services/toggleTaskStatus.service';
 
@@ -11,6 +12,14 @@ export default {
         await context.commit('toggleTaskStatus', {
             taskId: res.data._id,
             finished: res.data.finished
+        })
+    },
+    async createTask(context, payload) {
+        const res = await createTaskSerivce(payload);
+        await context.commit('createTask', {
+            title: res.data.title,
+            content: res.data.content,
+            end: res.data.end,
         })
     }
 }

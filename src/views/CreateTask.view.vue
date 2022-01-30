@@ -11,7 +11,7 @@
             </div>
             <div class="w-full mt-5 justify-end flex">
                 <secondary-button title="CANCEL" class="mr-3" @click="cancelForm"></secondary-button>
-                <primary-button title="CREATE"></primary-button>
+                <primary-button title="CREATE" @click="createTask"></primary-button>
             </div>
         </the-form>
     </div>
@@ -21,30 +21,46 @@
 <script>
 import TheForm from "../components/TheForm.vue";
 import TheInput from "../components/inputs/TheInput.vue";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import TheHeader from "../components/TheHeader.vue";
 import PrimaryButton from "../components/buttons/PrimaryButton.vue";
 import SecondaryButton from "../components/buttons/SecondaryButton.vue";
 import {  useRouter } from "vue-router";
+import { useStore } from 'vuex';
 export default {
     components: { TheForm, TheInput, TheHeader, PrimaryButton, SecondaryButton },
     setup () {
         
         const router = useRouter()
+        const store = useStore()
 
         const dataForm = reactive({
             title: '',
             content: '',
-            date: new Date(),
-            time: new Date().getTime(),
+            date: '',
+            time: ''
         })
 
         const cancelForm = () =>{
             router.push('/');
         }
 
+        const createTask = async () =>{
+           await store.dispatch('createTask', {
+                title: dataForm.title,
+                content: dataForm.content,
+                end: parseDate.value
+            })
+            router.push('/')
+        }
 
-        return {cancelForm, dataForm}
+        const parseDate = computed(()=>{
+            return dataForm.date + 'T' + dataForm.time
+        })
+       
+      
+
+        return {cancelForm, dataForm, createTask}
     }
 }
 </script>
