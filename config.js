@@ -1,3 +1,3 @@
-export default config = {
-    apiUrl:process.env.VUE_APP_API_URL
+export default {
+    apiUrl: import.meta.env.VITE_API_URL
 }
