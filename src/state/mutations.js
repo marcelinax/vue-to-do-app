@@ -7,5 +7,10 @@ export default {
     },
     createTask(state, payload) {
         state.tasks[payload, [...state.tasks]]
+    },
+    deleteTask(state, { taskId }) {
+        const taskIndex = state.tasks.findIndex(task => task._id === taskId);
+        state.tasks.splice(taskIndex,1)
+        state.tasks = [...state.tasks]
     }
 }

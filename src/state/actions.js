@@ -1,4 +1,5 @@
 import createTaskSerivce from './../services/createTask.service';
+import deleteTaskService from './../services/deleteTask.service';
 import getTasksService from './../services/getTasks.service';
 import toggleTaskStatusService from './../services/toggleTaskStatus.service';
 
@@ -20,6 +21,12 @@ export default {
             title: res.data.title,
             content: res.data.content,
             end: res.data.end,
+        })
+    },
+    async deleteTask(context, payload) {
+        const res = await deleteTaskService(payload);
+        await context.commit('deleteTask', {
+            taskId: res.data._id
         })
     }
 }

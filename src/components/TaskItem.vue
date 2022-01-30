@@ -16,7 +16,7 @@
     </div>
     <div class="w-full flex items-center mt-3">
         <button-with-icon icon="edit" class="hover:text-violet-600"></button-with-icon>
-        <button-with-icon icon="trash-alt" class="hover:text-rose-600"></button-with-icon>
+        <button-with-icon icon="trash-alt" class="hover:text-rose-600" @click="deleteTask"></button-with-icon>
     </div>
 </the-card>
 </template>
@@ -50,7 +50,7 @@ export default {
             required: true
         },
     },
-    emits: ['toggleIsFinished'],
+    emits: ['toggleIsFinished', 'delete'],
     setup(props, {emit}) {
 
         const endDate = computed(()=>{
@@ -68,11 +68,15 @@ export default {
             emit('toggleIsFinished', props.id)
         }
 
+        const deleteTask = () =>{
+            emit('delete', props.id)
+        }
+
         const isEndDateExpired = computed(() =>{
             return moment().diff(props.end) >= 0
         }) 
 
-        return {endDate, toggleIsFinished, isEndDateExpired}
+        return {endDate, toggleIsFinished, isEndDateExpired, deleteTask}
 
     },
     
