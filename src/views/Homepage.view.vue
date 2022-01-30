@@ -18,7 +18,7 @@ import PrimaryButton from "../components/buttons/PrimaryButton.vue";
 import {  useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import TasksList from "../components/TasksList.vue";
-import { ref } from '@vue/reactivity';
+
 export default {
     components: {
     TheHeader,

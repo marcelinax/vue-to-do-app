@@ -1,11 +1,13 @@
 <template>
-<the-card size="basis-1/4">
+<the-card size="basis-1/4" :class="{'opacity-60': isFinished}">
     <div class="w-full flex justify-between">
         <h3 class="font-semibold w-3/4">{{ title }}</h3>
-        <the-switch :value="true"></the-switch>
+        <the-switch :value="isFinished" @click="toggleIsFinished" :class="{active : isFinished}"></the-switch>
     </div>
     <div class="w-full mt-1">
-        <p class="text-xs font-semibold text-violet-600">5 days </p>
+        <p class="text-xs font-semibold text-violet-600" :class="{'text-rose-600': isEndDateExpired}">
+            {{ endDate }}
+        </p>
     </div>
     <div class="mt-5 w-full">
         <p class="text-sm text-zinc-500">{{content}}</p>
@@ -20,12 +22,19 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core';
 import ButtonWithIcon from "./buttons/ButtonWithIcon.vue";
 import TheSwitch from "./buttons/TheSwitch.vue";
 import TheCard from "./TheCard.vue";
+import moment from 'moment';
+
 export default {
     components: { ButtonWithIcon, TheSwitch, TheCard },
     props: {
+        id: {
+            type: String,
+            required: true
+        },
         title: {
             type: String,
         },
@@ -37,11 +46,34 @@ export default {
             default: false
         },
         end: {
-            type: Date,
+            type: String,
             required: true
         },
     },
-    setup() {
+    emits: ['toggleIsFinished'],
+    setup(props, {emit}) {
+
+        const endDate = computed(()=>{
+           return moment(props.end).calendar({
+                lastDay : '[Yesterday at]  HH:mm',
+                sameDay : '[Today at] HH:mm',
+                nextDay : '[Tomorrow] HH:mm',
+                lastWeek : '[last] dddd [at] HH:mm',
+                nextWeek : 'dddd [at] HH:mm',
+                sameElse : 'dddd, DD.MM.YYYY [at] HH:mm'
+            })
+        })
+
+        const toggleIsFinished = () =>{
+            emit('toggleIsFinished', props.id)
+        }
+
+        const isEndDateExpired = computed(() =>{
+            return moment().diff(props.end) >= 0
+        }) 
+
+        return {endDate, toggleIsFinished, isEndDateExpired}
+
     },
     
 }
