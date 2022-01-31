@@ -1,6 +1,6 @@
 <template>
 <div class="w-full grid grid-cols-3 gap-8" v-if="tasks.length > 0" >
-    <task-item v-for="task in tasks" :key="task._id" :id="task._id" :content="task?.content" :title="task?.title" :end="task?.end" :isFinished="task?.finished" @toggleIsFinished="toggleTaskStatus" @delete="deleteTask" @edit="moveToEditForm"></task-item>
+    <task-item v-for="task in tasks" :key="task._id" :id="task._id" :content="task?.content" :title="task?.title" :end="task?.end" :isFinished="task?.finished" @toggleIsFinished="toggleTaskStatus" @delete="emitDelete" @edit="moveToEditForm"></task-item>
 </div>
 </template>
     
@@ -16,13 +16,9 @@ export default {
         tasks: {
             type: Array,
             default: () => []
-        },
-        isModalShown: {
-            type: Boolean,
-            required: true
         }
     },
-    emits: ['openModal'],
+    emits: ['delete'],
     setup(props, {emit}) {
         const store = useStore()
         const router = useRouter()
@@ -31,8 +27,8 @@ export default {
              store.dispatch('toggleTaskStatus', taskId)
         }
 
-        const deleteTask = (taskId) =>{
-            store.dispatch('deleteTask', taskId)
+        const emitDelete = (taskId) =>{
+             emit('delete', taskId)
         }
 
         const moveToEditForm =  (taskId) => {
@@ -43,12 +39,7 @@ export default {
             })
         }
 
-        const openModal = () => {
-            emit('openModal', props.isModalShown )
-        } 
-
-
-        return {toggleTaskStatus, deleteTask, openModal, moveToEditForm}
+        return {toggleTaskStatus, moveToEditForm, emitDelete}
     },
 }
 </script>

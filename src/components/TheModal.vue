@@ -10,7 +10,7 @@
             </div>
             <div class="mt-6 w-full flex justify-end">
                 <secondary-button title="CANCEL" class="mr-3" @click="close"></secondary-button>
-                <primary-button title="CONFIRM"></primary-button>
+                <primary-button title="CONFIRM" @click="confirm"></primary-button>
             </div>
         </div>
     </the-card>
@@ -26,7 +26,7 @@ import TheCard from './TheCard.vue'
 export default {
   components: { SecondaryButton, PrimaryButton, TheCard },
     props: ['title', 'description', 'isShown'],
-    emits: ['close'],
+    emits: ['close', 'confirm'],
     setup(props, {emit}) {
 
         const modalClass = computed(() =>{
@@ -37,7 +37,11 @@ export default {
             emit('close', props.isShown)
         }
 
-        return {modalClass, close}
+        const confirm = () =>{
+            emit('confirm')
+        }
+
+        return {modalClass, close, confirm}
     }
 }
 </script>
