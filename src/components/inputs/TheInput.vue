@@ -2,6 +2,7 @@
     <div class="flex flex-col relative mb-6 ">
         <input :type="type" :id="id" @input="handleInput" :value="modelValue" class="border text-slate-400 rounded-md py-3 px-2 transition-all peer-focus:text-red-500 focus:border-2 focus:border-violet-500 outline-none"/>
         <label :for="id" class="font-semibold text-zinc-300 absolute -top-2 left-3 text-xs bg-white px-1 z-10 transition-all">{{ title.toUpperCase() }}</label>
+        <span v-if="error" class="text-xs text-rose-600 mt-1 font-medium">{{error}}</span>
     </div>
 </template>
 <script>
@@ -23,6 +24,10 @@ export default {
         type: {
             type: String,
             required: true
+        },
+        error: {
+            type: String,
+            default: ''
         }
     },
     emits: ['update:modelValue'],

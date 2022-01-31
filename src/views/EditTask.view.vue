@@ -2,16 +2,16 @@
     <div class="h-screen">
     <the-header></the-header>
     <div class="container mx-auto mt-24 flex">
-        <the-form  class="mx-auto" title="Create Task">
-            <the-input type="text" id="title" title="title" v-model="dataForm.title" class="mt-10"></the-input>
-            <the-input type="text" id="content" title="content" v-model="dataForm.content"></the-input>
+        <the-form  class="mx-auto" title="Edit Task" @submit="editTask">
+            <the-input type="text" id="title" title="title" v-model="dataForm.title" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)" class="mt-10"></the-input>
+            <the-input type="text" id="content" title="content" v-model="dataForm.content" :error="useFilterErrorMessages(errors,messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
             <div class="w-full flex">
-                <the-input type="date" id="date" title="date" v-model="date" class="basis-1/2 mr-5"></the-input>
-                <the-input type="time" id="time" title="time" v-model="time" class="basis-1/2"></the-input>
+                <the-input type="date" id="date" title="date" v-model="date" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="time" id="time" title="time" v-model="time" class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
             </div>
             <div class="w-full mt-5 justify-end flex">
-                <secondary-button title="CANCEL" class="mr-3" @click="cancelForm"></secondary-button>
-                <primary-button title="SAVE" @click="editTask"></primary-button>
+                <secondary-button title="CANCEL" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
+                <primary-button title="SAVE" @click="editTask" type="submit"></primary-button>
             </div>
         </the-form>
     </div>
@@ -26,7 +26,9 @@ import TheForm from '../components/TheForm.vue';
 import TheInput from '../components/inputs/TheInput.vue';
 import SecondaryButton from '../components/buttons/SecondaryButton.vue';
 import PrimaryButton from '../components/buttons/PrimaryButton.vue';
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
+import messages from "../../messages";
+import useFilterErrorMessages from "../hooks/useFilterErrorMessages";
 
 
 export default {
@@ -35,6 +37,8 @@ export default {
         const router = useRouter()
         const route = useRoute();
         const store = useStore()
+
+        const errors = ref([])
 
         store.dispatch('fetchAndSetTask', route.params.id)
 
@@ -66,13 +70,37 @@ export default {
             return endDateElements[1].slice(0, endDateElements[1].length - 8 )
         }) 
 
+        const checkForm = () => {
+            let isValid = true;
+            if(!date.value){
+                isValid = false;
+                errors.value.push(messages.DATE_CANNOT_BE_EMPTY)
+            }
+            if(!time.value){
+                isValid = false;
+                errors.value.push(messages.TIME_CANNOT_BE_EMPTY)
+            }
+            if(!dataForm.content){
+                isValid = false;
+                errors.value.push(messages.CONTENT_CANNOT_BE_EMPTY)
+            }
+            if(!dataForm.title){
+                isValid = false;
+                errors.value.push(messages.TITLE_CANNOT_BE_EMPTY)
+            }
+
+            return isValid
+        }
+
         const editTask = async () => {
-            await store.dispatch('editTask', {...dataForm, _id: route.params.id})
-            router.replace('/')
+            if(checkForm()){
+                await store.dispatch('editTask', {...dataForm, _id: route.params.id})
+                router.replace('/')
+            }
         }
 
       
-        return {cancelForm, date, time, dataForm, editTask}
+        return {cancelForm, date, time, dataForm, editTask, messages, useFilterErrorMessages, errors}
     },
 }
 </script>
