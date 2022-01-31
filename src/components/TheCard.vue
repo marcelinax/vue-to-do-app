@@ -1,5 +1,5 @@
 <template>
-<div class="shadow-3xl flex flex-col h-fit bg-white p-8 rounded-md" :class="size">
+<div class="shadow-3xl flex flex-col h-fit bg-white p-8 rounded-md overflow-hidden" :class="size">
     <slot></slot>
 </div>
 </template>

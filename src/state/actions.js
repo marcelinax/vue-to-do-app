@@ -1,5 +1,7 @@
 import createTaskSerivce from './../services/createTask.service';
 import deleteTaskService from './../services/deleteTask.service';
+import editTaskService from './../services/editTask.service';
+import getTaskService from './../services/getTask.service';
 import getTasksService from './../services/getTasks.service';
 import toggleTaskStatusService from './../services/toggleTaskStatus.service';
 
@@ -24,10 +26,23 @@ export default {
         })
     },
     async deleteTask(context, payload) {
-        const res = await deleteTaskService(payload);
-        console.log(res)
+        await deleteTaskService(payload);
         await context.commit('deleteTask', {
-            taskId: payload
+            taskId: payload,
+        })
+    },
+    async fetchAndSetTask(context, payload) {
+        const res = await getTaskService(payload);
+        await context.commit('setTask', res.data);
+    },
+    async editTask(context, payload) {
+        const res = await editTaskService(payload._id, payload);
+        await context.commit('editTask', {
+            taskId: res.data._id,
+            title: res.data.tile,
+            content: res.data.content,
+            end: res.data.end,
+            finished: res.data.finished
         })
     }
 }

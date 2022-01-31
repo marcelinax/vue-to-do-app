@@ -21,7 +21,7 @@
 <script>
 import TheForm from "../components/TheForm.vue";
 import TheInput from "../components/inputs/TheInput.vue";
-import { computed, reactive } from "vue";
+import { computed, reactive} from "vue";
 import TheHeader from "../components/TheHeader.vue";
 import PrimaryButton from "../components/buttons/PrimaryButton.vue";
 import SecondaryButton from "../components/buttons/SecondaryButton.vue";
@@ -57,8 +57,6 @@ export default {
         const parseDate = computed(()=>{
             return dataForm.date + 'T' + dataForm.time
         })
-       
-      
 
         return {cancelForm, dataForm, createTask}
     }
