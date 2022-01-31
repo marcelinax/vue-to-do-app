@@ -6,8 +6,8 @@
             <the-input type="text" id="title" title="title" v-model="dataForm.title" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)" class="mt-10"></the-input>
             <the-input type="text" id="content" title="content" v-model="dataForm.content" :error="useFilterErrorMessages(errors,messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
             <div class="w-full flex">
-                <the-input type="date" id="date" title="date" v-model="date" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
-                <the-input type="time" id="time" title="time" v-model="time" class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="date" id="date" title="date" :model-value="date" @update:modelValue="handleDateChange" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="time" id="time" title="time"  :model-value="time" @update:modelValue="handleTimeChange"  class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
             </div>
             <div class="w-full mt-5 justify-end flex">
                 <secondary-button title="CANCEL" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
@@ -94,13 +94,22 @@ export default {
 
         const editTask = async () => {
             if(checkForm()){
-                await store.dispatch('editTask', {...dataForm, _id: route.params.id})
+                await store.dispatch('editTask', {...dataForm, end: date.value + 'T' + time.value, _id: route.params.id})
                 router.replace('/')
             }
         }
 
+        const handleDateChange = (value) => {
+            const endDateElements = dataForm.end.split('T');
+            dataForm.end = value  + "T" + endDateElements[1];
+        }
+
+        const handleTimeChange = (value) => {
+            const endDateElements = dataForm.end.split('T');
+            dataForm.end = endDateElements[0] + "T" + value + ":00.000Z";
+        }
       
-        return {cancelForm, date, time, dataForm, editTask, messages, useFilterErrorMessages, errors}
+        return {cancelForm, date, time, dataForm, editTask, messages, useFilterErrorMessages, errors, handleDateChange, handleTimeChange}
     },
 }
 </script>
