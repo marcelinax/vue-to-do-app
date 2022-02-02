@@ -3,13 +3,14 @@ import deleteTaskService from './../services/deleteTask.service';
 import editTaskService from './../services/editTask.service';
 import getTaskService from './../services/getTask.service';
 import getTasksService from './../services/getTasks.service';
+import searchTasksService from './../services/searchTasks.service';
 import toggleTaskStatusService from './../services/toggleTaskStatus.service';
 
 export default {
-    async fetchAndSetTasks(context) {
-        const res = await getTasksService();
-        await context.commit('setTasks', res.data);
-    },
+    // async fetchAndSetTasks(context) {
+    //     const res = await getTasksService();
+    //     await context.commit('setTasks', res.data);
+    // },
     async toggleTaskStatus(context, payload) {
         const res = await toggleTaskStatusService(payload);
         await context.commit('toggleTaskStatus', {
@@ -44,5 +45,9 @@ export default {
             end: res.data.end,
             finished: res.data.finished
         })
+    },
+    async searchTasks(context, payload) {
+        const res = await searchTasksService(payload);
+        await context.commit('setTasks', res.data)
     }
 }

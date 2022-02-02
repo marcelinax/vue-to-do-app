@@ -1,10 +1,11 @@
 <template>
 <div class="relative h-screen w-screen">
 <the-header></the-header>
-<the-modal  :title="modalTitle" description="Are you sure you want to delete this task? This action is irreversible" @close="closeModal" :isShown="isModalShown" @confirm="confirmDelete"></the-modal>
+<the-modal  :title="modalTitle" :description="locales.modal_deleting_confirm_description" @close="closeModal" :isShown="isModalShown" @confirm="confirmDelete"></the-modal>
 <div class="mt-20 mb-20 container mx-auto">
-    <div class="w-full mb-10">
-        <primary-button title="ADD TASK" @click="goToForm"></primary-button>
+    <div class="w-full mb-10 flex">
+        <primary-button :title="locales.add_task" @click="goToForm"></primary-button>
+        <the-search v-model="searchQuery"></the-search>
     </div>
     <tasks-list :tasks="store.getters.tasks" @delete="deleteTask"></tasks-list>
 </div>
@@ -14,12 +15,14 @@
 <script>
 import TheHeader from "../components/TheHeader.vue";
 import TaskItem from "../components/TaskItem.vue";
+import TheSearch from "../components/TheSearch.vue";
 import PrimaryButton from "../components/buttons/PrimaryButton.vue";
 import {  useRouter } from 'vue-router';
 import { useStore } from "vuex";
 import TasksList from "../components/TasksList.vue";
 import TheModal from "../components/TheModal.vue";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { locales } from "../../locales";
 
 export default {
 components: {
@@ -27,7 +30,8 @@ components: {
     TaskItem,
     PrimaryButton,
     TasksList,
-    TheModal
+    TheModal,
+    TheSearch
 },
 
 setup() {
@@ -37,6 +41,7 @@ setup() {
 
     const isModalShown = ref(false)
     const deletingTaskId = ref(null)
+    const searchQuery = ref('');
 
     const goToForm = () =>{
         router.push('/create-task')
@@ -58,15 +63,26 @@ setup() {
          deletingTaskId.value = null;
     }
 
+    const searchTasks = () =>{
+        store.dispatch('searchTasks', searchQuery.value)
+    }
+
+   
+
     const modalTitle = computed(()=>{
         const task = store.getters.tasks.filter(task => task._id === deletingTaskId.value)[0] 
         if(!task) return ''
         return `Delete task ${task.title}`
     })
 
-    store.dispatch('fetchAndSetTasks');
-
-    return {goToForm, store, closeModal, deleteTask, isModalShown, modalTitle,confirmDelete }
+  
+    store.dispatch('searchTasks');
+    
+     watch(() => searchQuery.value,()=>{
+        searchTasks()
+    })
+    
+    return {goToForm, store, closeModal, deleteTask, isModalShown, modalTitle, confirmDelete, locales, searchTasks, searchQuery }
 }
 }
 </script>

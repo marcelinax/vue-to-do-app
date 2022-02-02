@@ -6,7 +6,6 @@
     
 <script>
 
-import { watch } from 'vue';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import TaskItem from './TaskItem.vue'

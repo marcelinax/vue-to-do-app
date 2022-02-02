@@ -2,16 +2,16 @@
 <div class="h-screen">
     <the-header></the-header>
     <div class="container mx-auto mt-24 flex">
-        <the-form class="mx-auto" title="Create Task" @submit="createTask">
-            <the-input type="text" id="title" title="title" v-model="dataForm.title" class="mt-10" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)"></the-input>
-            <the-input type="text" id="content" title="content" v-model="dataForm.content" :error="useFilterErrorMessages(errors, messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
+        <the-form class="mx-auto" :title="locales.create_task" @submit="createTask">
+            <the-input type="text" id="title" :title="locales.title" v-model="dataForm.title" class="mt-10" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)"></the-input>
+            <the-input type="text" id="content" :title="locales.content" v-model="dataForm.content" :error="useFilterErrorMessages(errors, messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
             <div class="w-full flex">
-                <the-input type="date" id="date" title="date" v-model="dataForm.date" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors, messages.DATE_CANNOT_BE_EMPTY)"></the-input>
-                <the-input type="time" id="time" title="time" v-model="dataForm.time" class="basis-1/2" :error="useFilterErrorMessages(errors, messages.TIME_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="date" id="date" :title="locales.date" v-model="dataForm.date" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors, messages.DATE_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="time" id="time" :title="locales.time" v-model="dataForm.time" class="basis-1/2" :error="useFilterErrorMessages(errors, messages.TIME_CANNOT_BE_EMPTY)"></the-input>
             </div>
             <div class="w-full mt-5 justify-end flex">
-                <secondary-button title="CANCEL" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
-                <primary-button title="CREATE" @click="createTask" type="submit"></primary-button>
+                <secondary-button :title="locales.cancel" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
+                <primary-button :title="locales.create" @click="createTask" type="submit"></primary-button>
             </div>
         </the-form>
     </div>
@@ -29,6 +29,7 @@ import {  useRouter } from "vue-router";
 import { useStore } from 'vuex';
 import useFilterErrorMessages from "../hooks/useFilterErrorMessages";
 import messages from "../../messages";
+import { locales } from "../../locales";
 
 
 export default {
@@ -88,7 +89,7 @@ export default {
             return dataForm.date + 'T' + dataForm.time
         })
 
-        return {cancelForm, dataForm, createTask, useFilterErrorMessages, messages, errors}
+        return {cancelForm, dataForm, createTask, useFilterErrorMessages, messages, errors, locales}
     }
 }
 </script>

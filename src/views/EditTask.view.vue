@@ -2,16 +2,16 @@
     <div class="h-screen">
     <the-header></the-header>
     <div class="container mx-auto mt-24 flex">
-        <the-form  class="mx-auto" title="Edit Task" @submit="editTask">
-            <the-input type="text" id="title" title="title" v-model="dataForm.title" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)" class="mt-10"></the-input>
-            <the-input type="text" id="content" title="content" v-model="dataForm.content" :error="useFilterErrorMessages(errors,messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
+        <the-form  class="mx-auto" :title="locales.edit_task" @submit="editTask">
+            <the-input type="text" id="title" :title="locales.title" v-model="dataForm.title" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)" class="mt-10"></the-input>
+            <the-input type="text" id="content" :title="locales.content" v-model="dataForm.content" :error="useFilterErrorMessages(errors,messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
             <div class="w-full flex">
-                <the-input type="date" id="date" title="date" :model-value="date" @update:modelValue="handleDateChange" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
-                <the-input type="time" id="time" title="time"  :model-value="time" @update:modelValue="handleTimeChange"  class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="date" id="date" :title="locales.date" :model-value="date" @update:modelValue="handleDateChange" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
+                <the-input type="time" id="time" :title="locales.time"  :model-value="time" @update:modelValue="handleTimeChange"  class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
             </div>
             <div class="w-full mt-5 justify-end flex">
-                <secondary-button title="CANCEL" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
-                <primary-button title="SAVE" @click="editTask" type="submit"></primary-button>
+                <secondary-button :title="locales.cancel" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
+                <primary-button :title="locales.save" @click="editTask" type="submit"></primary-button>
             </div>
         </the-form>
     </div>
@@ -29,6 +29,8 @@ import PrimaryButton from '../components/buttons/PrimaryButton.vue';
 import { computed, reactive, ref, watch } from 'vue';
 import messages from "../../messages";
 import useFilterErrorMessages from "../hooks/useFilterErrorMessages";
+import { locales } from "../../locales";
+
 
 
 export default {
@@ -109,7 +111,7 @@ export default {
             dataForm.end = endDateElements[0] + "T" + value + ":00.000Z";
         }
       
-        return {cancelForm, date, time, dataForm, editTask, messages, useFilterErrorMessages, errors, handleDateChange, handleTimeChange}
+        return {cancelForm, date, time, dataForm, editTask, messages, useFilterErrorMessages, errors, handleDateChange, handleTimeChange, locales}
     },
 }
 </script>
