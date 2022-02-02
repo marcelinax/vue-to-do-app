@@ -1,5 +1,5 @@
 <template>
-<div class="w-full grid grid-cols-3 gap-8" v-if="tasks.length > 0" >
+<div class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-5 md:px-0" v-if="tasks.length > 0" >
     <task-item v-for="task in tasks" :key="task._id" :id="task._id" :content="task?.content" :title="task?.title" :end="task?.end" :isFinished="task?.finished" @toggleIsFinished="toggleTaskStatus" @delete="emitDelete" @edit="moveToEditForm"></task-item>
 </div>
 </template>

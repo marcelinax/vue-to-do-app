@@ -1,6 +1,6 @@
 <template>
-<div class="fixed top-0 left-0 z-10 bg-slate-400/50 w-screen h-screen flex items-center justify-center" :class="modalClass">
-    <the-card size="w-1/3" class="p-0">
+<div class="fixed top-0 left-0 z-10 bg-slate-400/50 w-screen h-screen flex items-center justify-center px-5 md:px-0" :class="modalClass">
+    <the-card size="w-full md:w-3/4 lg:w-1/3" class="p-0">
         <div class="w-full bg-violet-600 p-5">
             <h1 class="text-white text-lg font-semibold">{{ title }}</h1>
         </div>

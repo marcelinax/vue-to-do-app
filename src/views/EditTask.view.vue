@@ -1,17 +1,17 @@
 <template>
-    <div class="h-screen">
+    <div class="min-h-screen max-w-screen">
     <the-header></the-header>
-    <div class="container mx-auto mt-24 flex">
+    <div class="container mx-auto mt-24 flex px-5 md:px-0">
         <the-form  class="mx-auto" :title="locales.edit_task" @submit="editTask">
             <the-input type="text" id="title" :title="locales.title" v-model="dataForm.title" :error="useFilterErrorMessages(errors, messages.TITLE_CANNOT_BE_EMPTY)" class="mt-10"></the-input>
             <the-input type="text" id="content" :title="locales.content" v-model="dataForm.content" :error="useFilterErrorMessages(errors,messages.CONTENT_CANNOT_BE_EMPTY)"></the-input>
-            <div class="w-full flex">
-                <the-input type="date" id="date" :title="locales.date" :model-value="date" @update:modelValue="handleDateChange" class="basis-1/2 mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
+            <div class="w-full flex flex-col md:flex-row">
+                <the-input type="date" id="date" :title="locales.date" :model-value="date" @update:modelValue="handleDateChange" class="basis-1/2 md:mr-5" :error="useFilterErrorMessages(errors,messages.DATE_CANNOT_BE_EMPTY)"></the-input>
                 <the-input type="time" id="time" :title="locales.time"  :model-value="time" @update:modelValue="handleTimeChange"  class="basis-1/2" :error="useFilterErrorMessages(errors,messages.TIME_CANNOT_BE_EMPTY)"></the-input>
             </div>
-            <div class="w-full mt-5 justify-end flex">
-                <secondary-button :title="locales.cancel" class="mr-3" @click.prevent="cancelForm" type="button"></secondary-button>
-                <primary-button :title="locales.save" @click="editTask" type="submit"></primary-button>
+            <div class="w-full mt-5 justify-end flex flex-col md:flex-row">
+                <secondary-button :title="locales.cancel" class="md:mr-3 mb-3 md:mb-0" @click.prevent="cancelForm" type="button"></secondary-button>
+                <primary-button :title="locales.save" @click.prevent="editTask" type="button"></primary-button>
             </div>
         </the-form>
     </div>

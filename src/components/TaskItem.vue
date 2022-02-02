@@ -1,5 +1,5 @@
 <template>
-<the-card size="basis-1/4" :class="{'opacity-60': isFinished}">
+<the-card size="w-full md:basis-1/4" :class="{'opacity-60': isFinished}">
     <div class="w-full flex justify-between">
         <h3 class="font-semibold w-3/4">{{ title }}</h3>
         <the-switch :value="isFinished" @click="toggleIsFinished" :class="{active : isFinished}"></the-switch>

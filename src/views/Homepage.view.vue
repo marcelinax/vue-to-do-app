@@ -1,11 +1,11 @@
 <template>
-<div class="relative h-screen w-screen">
+<div class="relative min-h-screen max-w-screen">
 <the-header></the-header>
 <the-modal  :title="modalTitle" :description="locales.modal_deleting_confirm_description" @close="closeModal" :isShown="isModalShown" @confirm="confirmDelete"></the-modal>
-<div class="mt-20 mb-20 container mx-auto">
-    <div class="w-full mb-10 flex">
-        <primary-button :title="locales.add_task" @click="goToForm"></primary-button>
+<div class="mt-20 mb-14 container mx-auto flex flex-col">
+    <div class="w-full mb-10 flex flex-col md:flex-row md:justify-between md:items-center px-5 md:px-0">
         <the-search v-model="searchQuery"></the-search>
+        <primary-button :title="locales.add_task" @click="goToForm" class="mt-5 md:mt-0"></primary-button>
     </div>
     <tasks-list :tasks="store.getters.tasks" @delete="deleteTask"></tasks-list>
 </div>
@@ -67,8 +67,6 @@ setup() {
         store.dispatch('searchTasks', searchQuery.value)
     }
 
-   
-
     const modalTitle = computed(()=>{
         const task = store.getters.tasks.filter(task => task._id === deletingTaskId.value)[0] 
         if(!task) return ''
@@ -81,7 +79,7 @@ setup() {
      watch(() => searchQuery.value,()=>{
         searchTasks()
     })
-    
+
     return {goToForm, store, closeModal, deleteTask, isModalShown, modalTitle, confirmDelete, locales, searchTasks, searchQuery }
 }
 }
